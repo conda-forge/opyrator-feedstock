@@ -7,11 +7,11 @@ package:
   version: {{ version }}
 
 source:
-  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/opyrator-{{ version }}.tar.gz
+  url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/opyrator-{{ version }}.tar.gz
   sha256: 38edbbda29065bbf5ac63fa80b8b443ba9bacd0b97c9f261d6e9b85620c1c79d
 
 build:
-  number: 0
+  number: 1
   noarch: python
   entry_points:
     - opyrator=opyrator._cli:cli
@@ -20,17 +20,20 @@ build:
 requirements:
   host:
     - pip
-    - python >=3.6
+    - python {{ python_min }}
+    - setuptools
   run:
     - fastapi
     - loguru
     - numpy
     - pandas
     - plotly
-    - python >=3.6
+    - python >={{ python_min }}
     - streamlit >=0.72
     - typer
     - uvicorn
+    # Fix for "pydantic.errors.PydanticImportError: `pydantic:parse_raw_as` has been removed in V2."
+    - pydantic <2
 
 test:
   imports:
@@ -41,6 +44,7 @@ test:
     - opyrator --help
   requires:
     - pip
+    - python {{ python_min }}
 
 about:
   home: https://opyrator-playground.mltooling.org/

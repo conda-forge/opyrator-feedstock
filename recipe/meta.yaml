@@ -21,6 +21,7 @@ requirements:
   host:
     - pip
     - python {{ python_min }}
+    - setuptools
   run:
     - fastapi
     - loguru
@@ -31,6 +32,8 @@ requirements:
     - streamlit >=0.72
     - typer
     - uvicorn
+    # Fix for "pydantic.errors.PydanticImportError: `pydantic:parse_raw_as` has been removed in V2."
+    - pydantic <2
 
 test:
   imports:
